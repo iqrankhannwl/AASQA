@@ -34,6 +34,7 @@ def measurements_by_pollutants(df):
     )
 
 def alerts_and_regulatory_thresholds():
+    st.write("Alerts and Regulatory Thresholds: Visual indicators signaling regulatory thresholds exceeded.")
     labels = ["Date de début", "Date de fin", "Organisme", "code zas", "Zas", "code site", "nom site", "type d'implantation", "Polluant", "type d'influence", "discriminant", "Réglementaire", "type d'évaluation", "procédure de mesure", "type de valeur", "valeur", "valeur brute", "unité de mesure", "taux de saisie", "couverture temporelle", "couverture de données", "code qualité", "validité"]
     values = [10, 20, 15, 25, 30, 5, 12, 18, 22, 17, 8, 28, 19, 14, 11, 16, 23, 27, 21, 9, 13, 24, 26]
     regulatory_threshold = 20
@@ -51,11 +52,46 @@ def alerts_and_regulatory_thresholds():
 
 
 def pollution_sources_analysis(df):
-    sources = df["type d'implantation"].unique()
-    pollution_levels = df["code zas"]
+    df = df[[keys for keys in df.keys()]]
+    grouped_data = df.groupby("type d'influence")
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.stem(sources, pollution_levels)
-    ax.set_xlabel('Pollution Sources')
-    ax.set_ylabel('Pollution Levels')
-    ax.set_title('Analysis of Pollution Sources')
+    for name, data in grouped_data:
+        sns.lineplot(data=data, x=df.keys()[0], y='valeur', label=name, ax=ax)
+    ax.set_title('Evolution of Air Quality Over Time')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Air Quality Index')
+    plt.xticks(rotation=45)
+    st.pyplot(fig)
+
+def _plot_series(series, series_name, series_index=0, target="valeur"):
+    palette = list(sns.color_palette("Dark2"))
+    xs = series[series.keys()[0]]
+    ys = series[target]
+    plt.plot(xs, ys, label=series_name, color=palette[series_index % len(palette)])
+
+def regional_comparisons(df):
+    
+    st.write("Regional Comparisons: Graphs comparing air quality between different regions.")
+    grouped_data = df.groupby('Zas')
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for region, data in grouped_data:
+        sns.lineplot(data=data, x=df.keys()[0], y='valeur', label=region, ax=ax)
+    ax.set_title('Regional Comparisons: Air Quality')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Air Quality Index')
+    plt.xticks(rotation=45)
+    st.pyplot(fig)
+
+def history_and_trends(df):
+    st.write("History and Trends: Graphs showing the evolution of air quality over time.")
+
+    df = df[[df.keys()[0], "type d'influence", 'discriminant',"type de valeur", 'valeur', 'valeur brute']]
+    grouped_data = df.groupby(df.keys()[0])
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for name, data in grouped_data:
+        sns.lineplot(data=data, x=df.keys()[0], y='valeur', label=name, ax=ax)
+    ax.set_title('Evolution of Air Quality Over Time')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Air Quality Index')
+    plt.xticks(rotation=45)
     st.pyplot(fig)
