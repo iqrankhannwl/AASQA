@@ -1,5 +1,13 @@
+# Air Quality Dashboard Application - Local Setup
+
+
 ## Clone Repository
-git clone https://github.com/iqrankhannwl/AASQA.git
+git clone https://github.com/iqrankhannwl/air-quality-dashboard.git
+
+## Navigate to Project Directory
+```bash
+cd air-quality-dashboard
+```
 
 ## Create Virtual Environment:
 ```bash
@@ -43,4 +51,25 @@ air-quality-dashboard/
 ├── README.md                 # Project README file
 ├── requirements.txt          # List of project dependencies
 └── LICENSE                   # License file (e.g., MIT License)
+```
+
+# Air Quality Dashboard Application - Docker Setup
+
+## Build Docker Image:
+```bash
+docker build -t air-quality-dashboard .
+```
+OR
+```bash
+make build
+```
+## Run Docker Container:
+
+```bash
+docker run -p 8501:8501 air-quality-dashboard
+
+```
+OR
+```bash
+make run
 ```
