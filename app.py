@@ -1,7 +1,6 @@
 import seaborn as sns
 import streamlit as st
 import pandas as pd
-from scripts.data_processing import perform_data_analysis
 import  matplotlib.pyplot as plt
 from scripts.graphs import time_graphs,measurements_by_pollutants,alerts_and_regulatory_thresholds, pollution_sources_analysis,regional_comparisons, history_and_trends
 from src.Home import home_page

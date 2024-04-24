@@ -63,14 +63,9 @@ def pollution_sources_analysis(df):
     plt.xticks(rotation=45)
     st.pyplot(fig)
 
-def _plot_series(series, series_name, series_index=0, target="valeur"):
-    palette = list(sns.color_palette("Dark2"))
-    xs = series[series.keys()[0]]
-    ys = series[target]
-    plt.plot(xs, ys, label=series_name, color=palette[series_index % len(palette)])
+
 
 def regional_comparisons(df):
-    
     st.write("Regional Comparisons: Graphs comparing air quality between different regions.")
     grouped_data = df.groupby('Zas')
     fig, ax = plt.subplots(figsize=(10, 6))

@@ -2,9 +2,15 @@ import seaborn as sns
 import streamlit as st
 import pandas as pd
 import  matplotlib.pyplot as plt
-from scripts.graphs import _plot_series
+
 import warnings
 warnings.filterwarnings('ignore')
+
+def _plot_series(series, series_name, series_index=0, target="valeur"):
+    palette = list(sns.color_palette("Dark2"))
+    xs = series[series.keys()[0]]
+    ys = series[target]
+    plt.plot(xs, ys, label=series_name, color=palette[series_index % len(palette)])
 
 def home_page(df):
     col3,col4=st.columns((2))
